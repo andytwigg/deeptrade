@@ -1,8 +1,10 @@
 # deeptrade
 
 A series of experiments for learning to trade with RL.
+
 See writeup here: https://medium.com/@andytwigg/learning-to-trade-with-deep-rl-666ed6bbd921
 
+![state](./experiments/small_state.png)
 
 # quick start
 
