@@ -8,14 +8,22 @@ See writeup here: https://medium.com/@andytwigg/learning-to-trade-with-deep-rl-6
 
 # setup
 
-First get data and setup conda/venv
+Clone and setup conda/venv (NB this uses python 3.7 due to tensorflow/baselines compatibility)
 ```
+conda create --name deeptrade python=3.7.12
+conda activate deeptrade
+# install git lfs for data
+brew install git-lfs
+git lfs install
 git clone git@github.com:andytwigg/deeptrade.git
 cd deeptrade
 pip install -r requirements.txt
 # NB you may need to conda install gxx_linux-64 for mpi4py
+# add env variable to data path
+export DEEPTRADE_DATA=`pwd`/deeptrade-data/
 ```
-Get the data (from S3) (TODO) and add env variable, eg:
+
+(alternative) Get the raw data and add env variable, eg:
 ```
 mkdir deeptrade-data
 aws s3 sync s3://deeptrade.data/gdax_book/BTC-USD/split/ deeptrade-data/gdax_book/BTC-USD/split/
