@@ -6,7 +6,7 @@ See writeup here: https://medium.com/@andytwigg/learning-to-trade-with-deep-rl-6
 
 ![state](./experiments/small_state.png)
 
-# quick start
+# setup
 
 First get data and setup conda/venv
 ```
@@ -15,10 +15,15 @@ cd deeptrade
 pip install -r requirements.txt
 # NB you may need to conda install gxx_linux-64 for mpi4py
 ```
-Get the data (from S3) (TODO) and add env variable:
+Get the data (from S3) (TODO) and add env variable, eg:
 ```
+mkdir deeptrade-data
+aws s3 sync s3://deeptrade.data/gdax_book/BTC-USD/split/ deeptrade-data/gdax_book/BTC-USD/split/
 export DEEPTRADE_DATA=<path_to_deeptrade-data>
 ```
+(see below for raw data)
+
+# play
 
 All the training, model, agent and env config parameters are stored in `config.json`.
 
@@ -27,6 +32,13 @@ Play random rollouts:
 python -m deeptrade.play --config config.json --random
 ```
 
+To "visualize" an environment, use the `play.py` script with `--curses`:
+```
+python -m deeptrade.play  --config config.json --curses --slow
+```
+(`--slow` will pause for keyboard press after each step)
+
+# train
 Start a training run (using cpu parallelism via vecenv):
 ```
 python -m deeptrade.train --config config.json
@@ -38,12 +50,6 @@ To use multiple gpus:
 RCALL_NUM_GPU=8 PYTHONPATH=. mpiexec -np 8 python -m deeptrade.train  --config.json
 ```
 will use 8 GPUs, with 8 mpi processes, each process using `config.nenvs` rollout workers.
-
-To "visualize" an environment, use the `play.py` script with `--curses`:
-```
-python -m deeptrade.play  --config config.json --curses --slow
-```
-(`--slow` will pause for keyboard press after each step)
 
 For more config params, and various envs, agent, policies, please see `config.json` and the code :)
 
